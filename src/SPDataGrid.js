@@ -1,7 +1,10 @@
 import React from 'react';
 import data from './SPData.json';
-import { Range } from 'rc-slider';
+import Slider, { createSliderWithTooltip } from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import './SPDataGrid.css';
+
+const Range = createSliderWithTooltip(Slider.Range)
 
 class SPDataGrid extends React.Component {
 
@@ -17,6 +20,7 @@ class SPDataGrid extends React.Component {
     }
 
     //reverse the data to put in ascending
+    //init data for slider
     componentDidMount(){
         data.reverse();
         var min = data[0].year;
@@ -42,7 +46,7 @@ class SPDataGrid extends React.Component {
                 return (
                     <tr key={dataEl.year}>
                         <td>{dataEl.year}</td>
-                        <td>{dataEl.totalReturn}</td>
+                        <td style={ dataEl.totalReturn < 0 ? {color: 'red'} : {}}>{dataEl.totalReturn}</td>
                         <td>{Math.round(culmativeReturn * 100)/100}</td>
                     </tr>
                 )
@@ -62,15 +66,17 @@ class SPDataGrid extends React.Component {
         if(loaded)
             return (
                 <>
+                    <h5 className='text-center'>S&P 500 Total Returns by Year</h5>
                     <Range allowCross={false} 
                             min={min} max={max} value={value}
-                            onChange={this.onSliderChange}/>
-                    <table>
+                            onChange={this.onSliderChange}
+                            tipFormatter={value => `${value}`}/>
+                    <table className="datagrid table table-hover">
                         <thead>
                             <tr>
-                                <th>Year</th>
-                                <th>Total Return</th>
-                                <th>Culmative Returns</th>
+                                <th scope='col'>Year</th>
+                                <th scope='col'>Total Return</th>
+                                <th scope='col'>Culmative Returns</th>
                             </tr>
                         </thead>
                         <tbody>

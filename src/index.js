@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './bootstrap.min.css';
 import SPDataGrid from './SPDataGrid';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <div className="container">
     <SPDataGrid />
-  </React.StrictMode>,
+  </div>,
   document.getElementById('root')
 );
 
