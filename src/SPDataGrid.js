@@ -10,19 +10,24 @@ class SPDataGrid extends React.Component {
     }
 
     //render data grid
-    updateDataGrid(){
+    //restrict to start year and end yaer
+    updateDataGrid(startYear, endYear){
         var culmativeReturn = 0;
         return data.map((dataEl) => {
-            //add to culmative return
-            culmativeReturn += parseFloat(dataEl.totalReturn);
-            //render data
-            return (
-                <tr key={dataEl.year}>
-                    <td>{dataEl.year}</td>
-                    <td>{dataEl.totalReturn}</td>
-                    <td>{Math.round(culmativeReturn * 100)/100}</td>
-                </tr>
-            )
+            //check if year is between range
+            if(dataEl.year >= startYear && dataEl.year <= endYear){
+                //add to culmative return
+                culmativeReturn += parseFloat(dataEl.totalReturn);
+                //render data
+                return (
+                    <tr key={dataEl.year}>
+                        <td>{dataEl.year}</td>
+                        <td>{dataEl.totalReturn}</td>
+                        <td>{Math.round(culmativeReturn * 100)/100}</td>
+                    </tr>
+                )
+            }else
+                return (<tr key={dataEl.year}></tr>)
         });
     }
 
@@ -39,7 +44,7 @@ class SPDataGrid extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.updateDataGrid()}
+                        {this.updateDataGrid(2000, 2005)}
                     </tbody>
                 </table>
             </>
